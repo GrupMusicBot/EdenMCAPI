@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 public class RetreveAPI {
 
 //    public static void getAPIInfo(Player player){
-//        MongoClient mongoClient = MongoClients.create("mongodb+srv://EdenAdmin:j2NmOEmDLb@discordcluster.lxrev.mongodb.net/DiscordBot?retryWrites=true&w=majority");
+//        MongoClient mongoClient = MongoClients.create("MongoURL");
 //        MongoDatabase database = mongoClient.getDatabase("MC");
 //        MongoCollection<Document> coll = database.getCollection("API");
 //
