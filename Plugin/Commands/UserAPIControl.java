@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 public class UserAPIControl implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-        MongoClient mongoClient = MongoClients.create("mongodb+srv://EdenAdmin:j2NmOEmDLb@discordcluster.lxrev.mongodb.net/DiscordBot?retryWrites=true&w=majority");
+        MongoClient mongoClient = MongoClients.create("MongoURL");
         MongoDatabase database = mongoClient.getDatabase("MC");
         MongoCollection<Document> coll = database.getCollection("API");
 
