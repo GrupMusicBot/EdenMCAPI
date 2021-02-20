@@ -49,7 +49,7 @@ public class API {
 
     public static void HandleLeave(Player player){
         // We do on leave rather than live data because less data to transfer each time
-        MongoClient mongoClient = MongoClients.create("mongodb+srv://EdenAdmin:j2NmOEmDLb@discordcluster.lxrev.mongodb.net/DiscordBot?retryWrites=true&w=majority");
+        MongoClient mongoClient = MongoClients.create("MongoURL");
         MongoDatabase database = mongoClient.getDatabase("MC");
         MongoCollection<Document> coll = database.getCollection("API");
 
@@ -109,7 +109,7 @@ public class API {
 
 
     public static void HandleJoin(Player player){
-        MongoClient mongoClient = MongoClients.create("mongodb+srv://EdenAdmin:j2NmOEmDLb@discordcluster.lxrev.mongodb.net/DiscordBot?retryWrites=true&w=majority");
+        MongoClient mongoClient = MongoClients.create("MongoURL");
         MongoDatabase database = mongoClient.getDatabase("MC");
         MongoCollection<Document> coll = database.getCollection("API");
 
