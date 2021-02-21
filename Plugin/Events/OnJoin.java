@@ -1,6 +1,6 @@
-package com.peanutlab.api.peanutlabapi.Events;
+package com.kuebv.mcapi.mcapi.Events;
 
-import com.peanutlab.api.peanutlabapi.API;
+import com.kuebv.mcapi.mcapi.API.API;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
