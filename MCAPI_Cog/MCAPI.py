@@ -51,6 +51,8 @@ class MCAPI(commands.Cog):
     async def profile(self, ctx , username):
         # If the User has ever joined the server, the DB will return a value
         # If the user has never joined the server, the DB will not return anything other than their name
+        
+        # Need to add override command for staff members of the server
 
         APINotEnabled = discord.Embed(title="User does not have their API Enabled!", color=discord.Color.red())
         # Pre define this
