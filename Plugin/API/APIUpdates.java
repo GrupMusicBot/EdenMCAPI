@@ -24,10 +24,8 @@ public class APIUpdates {
 
         try{
             Document filter = new Document();
-            Document updateDoc = new Document().append("$set", new Document().append("TotalDistanceTravelledOnFoot", 0));
-            Document updateFall = new Document().append("$set", new Document().append("TotalDistanceFell", 0));
+            Document updateDoc = new Document().append("$set", new Document().append("DiamondsMined", 0).append("StoneMined", 0));
             coll.updateMany(filter, updateDoc);
-            coll.updateMany(filter, updateFall);
 
             player.sendMessage(ChatColor.GREEN + "Database has been updated");
             mongoClient.close();

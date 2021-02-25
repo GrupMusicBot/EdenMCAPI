@@ -14,12 +14,13 @@ public class UserAPIControlsTab implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (arguments.isEmpty()) {
-            arguments.add("link");
+            //arguments.add("link");
             arguments.add("disable");
             arguments.add("enable");
             arguments.add("about");
             arguments.add("help");
             arguments.add("update");
+            arguments.add("mystats");
 
         }
 

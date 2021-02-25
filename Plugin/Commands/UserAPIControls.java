@@ -4,6 +4,7 @@ import com.kuebv.mcapi.mcapi.API.APITokenGenerator;
 import com.kuebv.mcapi.mcapi.API.APIUpdates;
 import com.kuebv.mcapi.mcapi.API.CFG;
 import com.kuebv.mcapi.mcapi.MCAPI;
+import com.mongodb.Block;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -11,6 +12,8 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Statistic;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,18 +44,18 @@ public class UserAPIControls  implements CommandExecutor {
                 player.sendMessage(ChatColor.RED + "Incorrect Syntax : Do /api help for more help");
             }
             if (args.length >= 1){
-                if (args[0].equalsIgnoreCase("link")){
-                    player.sendMessage(ChatColor.YELLOW + "Please Wait while the code is generating...");
-                    String authToken = APITokenGenerator.GetCode();
-                    coll.find(updatefilter).forEach((Consumer<Document>) document -> {
-                        Bson LinkAccount = new Document("AuthCode" , authToken);
-                        Bson UpdateOperator_One = new Document("$set", LinkAccount);
-                        coll.updateOne(document, UpdateOperator_One);
-                    });
-                    mongoClient.close();
-                    player.sendMessage(ChatColor.GREEN + "Generated Code : Your Code is in the Debug Message Below");
-                    API.DebugMessage(player, authToken);
-                }
+//                if (args[0].equalsIgnoreCase("link")){
+//                    player.sendMessage(ChatColor.YELLOW + "Please Wait while the code is generating...");
+//                    String authToken = APITokenGenerator.GetCode();
+//                    coll.find(updatefilter).forEach((Consumer<Document>) document -> {
+//                        Bson LinkAccount = new Document("AuthCode" , authToken);
+//                        Bson UpdateOperator_One = new Document("$set", LinkAccount);
+//                        coll.updateOne(document, UpdateOperator_One);
+//                    });
+//                    mongoClient.close();
+//                    player.sendMessage(ChatColor.GREEN + "Generated Code : Your Code is in the Debug Message Below");
+//                    API.DebugMessage(player, authToken);
+//                }
                 if (args[0].equalsIgnoreCase("disable")){
                     player.sendMessage(ChatColor.BLUE + "[Debug] " + ChatColor.GRAY + "Disabling API");
 
@@ -82,8 +85,7 @@ public class UserAPIControls  implements CommandExecutor {
                     player.sendMessage(ChatColor.GREEN + "_______________________________");
                     player.sendMessage(ChatColor.BLUE + "/api about - Displays information about the plugin\n" +
                             "/api disable - Disable your API for the public\n" +
-                            "/api enable - Enable your API for the public\n" +
-                            "/api link <Code> - Do $api link in the discord to link your account to the API");
+                            "/api enable - Enable your API for the public\n");
                     player.sendMessage(ChatColor.GREEN + "_______________________________");
                 }
                 if (args[0].equalsIgnoreCase("update")){
@@ -94,6 +96,21 @@ public class UserAPIControls  implements CommandExecutor {
                     }
                     APIUpdates.UpdateDatabase(player);
                     mongoClient.close();
+
+                }
+
+                if (args[0].equalsIgnoreCase("mystats")){
+                    int BlocksMined = player.getStatistic(Statistic.MINE_BLOCK, Material.DIAMOND_ORE);
+                    int Deaths = player.getStatistic(Statistic.DEATHS);
+                    int PlayerKills = player.getStatistic(Statistic.PLAYER_KILLS);
+                    int MobKills = player.getStatistic(Statistic.MOB_KILLS);
+
+                    player.sendMessage(ChatColor.BLUE +
+                            "------------------------------------" +
+                            "\nDiamonds Mined : " + ChatColor.GRAY + BlocksMined + ChatColor.BLUE +
+                            "\nDeaths : " + ChatColor.GRAY + Deaths + ChatColor.BLUE +
+                            "\nPlayerKills : " +  ChatColor.GRAY + PlayerKills + ChatColor.BLUE +
+                            "\nMobKills : " + ChatColor.GRAY + MobKills);
 
                 }
 
