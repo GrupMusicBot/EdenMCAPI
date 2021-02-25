@@ -48,13 +48,23 @@ class MCAPI(commands.Cog):
                 TotalDeaths = (result["Deaths"])
                 Playtime = (result["Playtime"])
                 Distance = (result["DistanceTravelled"])
+                
+                if Playtime > 60:
+                    Playtime = Playtime / 60
+                    if Playtime > 24:
+                        Playtime = Playtime / 24
+                        PlayTimeString = f"{round(Playtime, 1)} Days"
+                    else:
+                        PlayTimeString = f"{round(Playtime, 1)} Hours"
+                else:
+                    PlayTimeString = f"{round(Playtime, 1)} Minutes"
 
                 e.add_field(name="Mob Kills", value=MobKills, inline=True)
                 e.add_field(name="Player Kills", value=PlayerKills, inline=True)
                 e.add_field(name="Total Kills", value=MobKills+PlayerKills, inline=True)
                 e.add_field(name="Total Deaths", value=TotalDeaths, inline=False)
                 e.add_field(name="Distance Travelled", value=f"{Distance/100} Blocks", inline=False)
-                e.add_field(name="Playtime (in minutes)", value=Playtime, inline=False)
+                e.add_field(name="Playtime", value=PlayTimeString, inline=False)
                 
             await ctx.send(embed=e)
         except:
