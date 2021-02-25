@@ -24,29 +24,6 @@ class MCAPI(commands.Cog):
         helpEmbed.add_field(name="__Subcommands : __", value=f"**link** - Link MC & Discord Account\n**profile** - View an MC Profile that has joined the server", inline=False)
         await ctx.send(embed=helpEmbed)
 
-    @api.command(name="link")
-    async def link(self, ctx , code):
-        if len(code) > 6:
-            # API Link Codes are never more than 6 characters
-            await ctx.send("That doesn't look like a valid code!")
-            return
-
-        result = DBCollection.find({"AuthCode": code})
-        try:
-            for results in result:
-                Username = (results["Username"])
-                UUID = (results["_id"])
-
-            UpdateCode = DBCollection.update_one({"_id": UUID}, {
-                "$set": {"AuthCode": "Linked", "DiscordName": ctx.author.name, "DiscordID": ctx.author.id}})
-            AccountLinked = discord.Embed(title="Account Linked!", color=discord.Color.green())
-            AccountLinked.add_field(name="Username & UUID", value=f"{Username} | ({UUID})")
-            await ctx.send(embed=AccountLinked)
-        except Exception as e:
-            errorEmbed = discord.Embed(title="An Error has Occured", color=discord.Color.red())
-            errorEmbed.add_field(name="Error Message", value=f"```{type(e).__name__}```")
-            await ctx.send(embed=errorEmbed)
-
     @api.command(name="profile")
     async def profile(self, ctx , username):
         # If the User has ever joined the server, the DB will return a value
@@ -66,20 +43,19 @@ class MCAPI(commands.Cog):
                     await ctx.send(embed=APINotEnabled)
                     return
 
-                TotalKills = (result["TotalKills"])
-                TotalDeaths = (result["TotalDeaths"])
+                PlayerKills = (result["PlayerKills"])
+                MobKills = (result["MobKills"])
+                TotalDeaths = (result["Deaths"])
                 Playtime = (result["Playtime"])
-                DiscordName = (result["DiscordName"])
-                DiscordID = (result["DiscordID"])
+                Distance = (result["DistanceTravelled"])
 
-                e.add_field(name="Total Kills (Mob + Player)", value=TotalKills, inline=False)
+                e.add_field(name="Mob Kills", value=MobKills, inline=True)
+                e.add_field(name="Player Kills", value=PlayerKills, inline=True)
+                e.add_field(name="Total Kills", value=MobKills+PlayerKills, inline=True)
                 e.add_field(name="Total Deaths", value=TotalDeaths, inline=False)
+                e.add_field(name="Distance Travelled", value=f"{Distance/100} Blocks", inline=False)
                 e.add_field(name="Playtime (in minutes)", value=Playtime, inline=False)
-
-                if DiscordName == "None":
-                    e.add_field(name="Discord User", value="N/A", inline=False)
-                else:
-                    e.add_field(name="Discord User", value=f"<@!{DiscordID}>", inline=False)
+                
             await ctx.send(embed=e)
         except:
             er = discord.Embed(title="User has never joined the server!")
